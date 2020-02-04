@@ -28,12 +28,12 @@ namespace Kian.Mod
 
     public static class LoadTool {
         public static void Load() {
+            ShortCuts.Log("LoadTool:Creating kian button.");
             ToolButton.Create();
-            ShortCuts.Log("LoadTool:Created kian tool.");
         }
         public static void Release() {
+            ShortCuts.Log("LoadTool:Releaseing kian button.");
             ToolButton.Release();
-            ShortCuts.Log("LoadTool:Removed kian tool.");
         }
     }
 
