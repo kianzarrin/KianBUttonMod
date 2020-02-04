@@ -11,7 +11,7 @@ namespace Kian.UI
             base.Start();
             // Set the text to show on the
             text = "Click Me!";
-            name = "ToolACtivateButton";
+            name = "ToolActivateButton";
 
             // Set the button dimensions.
             width = 100;
@@ -21,12 +21,12 @@ namespace Kian.UI
             normalBgSprite = "ButtonMenu";
             disabledBgSprite = "ButtonMenuDisabled";
             hoveredBgSprite = "ButtonMenuHovered";
-            focusedBgSprite = "ButtonMenuFocused";
+            focusedBgSprite = normalBgSprite;// "ButtonMenuFocused";
             pressedBgSprite = "ButtonMenuPressed";
             textColor = new Color32(255, 255, 255, 255);
             disabledTextColor = new Color32(7, 7, 7, 255);
             hoveredTextColor = new Color32(7, 132, 255, 255);
-            focusedTextColor = new Color32(255, 255, 255, 255);
+            focusedTextColor = textColor;// new Color32(255, 255, 255, 255);
             pressedTextColor = new Color32(30, 30, 44, 255);
 
             // Enable button sounds.
@@ -54,12 +54,12 @@ namespace Kian.UI
 
         public static void Release() {
             var uiView = UIView.GetAView();
-            var button = (ToolButton)uiView.GetComponent<ToolButton>();
+            var button = (ToolButton)uiView.FindUIComponent<ToolButton>("ToolActivateButton");
             Destroy(button);
         }
 
         public static void OnClick(UIComponent component, UIMouseEventParameter eventParam) {
-            Log("Helo world! from KIAN");
+            Log("ToolButton:OnClick() called");
             
         }
     }
