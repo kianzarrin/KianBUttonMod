@@ -1,6 +1,7 @@
 using ColossalFramework.UI;
 using UnityEngine;
 using ColossalFramework;
+using static Kian.Mod.ShortCuts;
 
 namespace Kian.UI
 {
@@ -58,7 +59,7 @@ namespace Kian.UI
         }
 
         public static void OnClick(UIComponent component, UIMouseEventParameter eventParam) {
-
+            Log("Helo world! from KIAN");
             
         }
     }
