@@ -9,8 +9,8 @@ using System.Diagnostics;
 namespace Kian.Mod
 {
     public class KianModInfo : IUserMod {
-        public string Name => "Kian better hover";
-        public string Description => "kian hovering tool that is clever about node to segment hovering";
+        public string Name => "kian button mod";
+        public string Description => "simple test mod with a button to activate test";
 
         public void OnEnabled() {
             System.IO.File.WriteAllText(ShortCuts.filename, ""); //clear file
