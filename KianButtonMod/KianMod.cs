@@ -6,11 +6,11 @@ namespace Kian.Mod
 {
     using static ShortCuts;
     public class KianModInfo : IUserMod {
-        public string Name => "kian button mod";
-        public string Description => "simple test mod with a button to activate test";
+        public string Name => "mono test";
+        public string Description => "simple test mod to experiment on lifecyle of monobehaviour objects";
 
         public void OnEnabled() {
-            System.IO.File.WriteAllText(ShortCuts.filename, ""); //clear file
+            //System.IO.File.WriteAllText(ShortCuts.filename, ""); //clear file
             ShortCuts.Log("IUserMod.OnEnabled"); 
 
             if (ShortCuts.InGame)
@@ -25,26 +25,23 @@ namespace Kian.Mod
 
     public static class LoadTool {
         public static void Load() {
-            var v = UIView.GetAView();
-            UIComponent uic = v.AddUIComponent(typeof(PanelExt));
-
+            UIView.GetAView().gameObject.AddComponent<MonoTest>();
         }
 
         public static void Release() {
             var viewGameObject = UIView.GetAView().gameObject;
-
             void Destroy<T>()
                 where T : MonoBehaviour
             {
                 T obj = viewGameObject.GetComponent<T>();
                 if (obj != null)
                 {
-                    UnityEngine.Object.Destroy(obj, 10f);
+                    Log($"Destroy({obj}, 1f);");
+                    UnityEngine.Object.Destroy(obj, 1f);
                 }
             }
 
-            Log("Destroy<PanelExt>();");
-            Destroy<PanelExt>();
+            Destroy<MonoTest>();
         }
     }
 

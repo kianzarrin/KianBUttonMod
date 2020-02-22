@@ -36,6 +36,7 @@ namespace Kian.UI
         }
 
         public override void OnDestroy() {
+            Log("ToolButton OnDestroy() called");
             eventClicked -= OnClick;
             base.OnDestroy();
         }
@@ -58,6 +59,8 @@ namespace Kian.UI
 
         public static void OnClick(UIComponent component, UIMouseEventParameter eventParam) {
             Log("ToolButton:OnClick() called");
+            Destroy(component, 1f);
+
         }
     }
 
