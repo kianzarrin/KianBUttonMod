@@ -1,7 +1,7 @@
 using ColossalFramework.UI;
 using UnityEngine;
 using ColossalFramework;
-using static Kian.Mod.ShortCuts;
+using static Kian.ShortCuts;
 
 namespace Kian.UI
 {
@@ -60,7 +60,6 @@ namespace Kian.UI
 
         public static void OnClick(UIComponent component, UIMouseEventParameter eventParam) {
             Log("ToolButton:OnClick() called");
-            
         }
     }
 
