@@ -32,9 +32,6 @@ namespace Kian.UI
             // Enable button sounds.
             playAudioEvents = true;
 
-            // Place the
-            transformPosition = new Vector3(-1.65f, 0.97f);
-
             eventClicked += OnClick;
         }
 
@@ -43,11 +40,12 @@ namespace Kian.UI
             base.OnDestroy();
         }
 
-
-        public static ToolButton Create() {
+        public static ToolButton Create() { 
             var uiView = UIView.GetAView();
             var button = (ToolButton)uiView.AddUIComponent(typeof(ToolButton));
-            
+            // Place the button
+            button.transformPosition = new Vector3(-1.65f, 0.97f);
+
             return button;
 
         }

@@ -3,8 +3,7 @@ using ColossalFramework;
 using UnityEngine;
 using System;
 
-using Kian.UI;
-using System.Diagnostics;
+using ColossalFramework.UI;
 
 namespace Kian.Mod
 {
@@ -28,12 +27,22 @@ namespace Kian.Mod
 
     public static class LoadTool {
         public static void Load() {
-            ToolButton.Create();
-            ShortCuts.Log("LoadTool:Created kian tool.");
+            //UIView.GetAView().gameObject.AddComponent<PanelExt>();
         }
         public static void Release() {
-            ToolButton.Release();
-            ShortCuts.Log("LoadTool:Removed kian tool.");
+            var viewGameObject = UIView.GetAView().gameObject;
+
+            void Destroy<T>()
+                where T : MonoBehaviour
+            {
+                T obj = viewGameObject.GetComponent<T>();
+                if (obj != null)
+                {
+                    UnityEngine.Object.Destroy(obj, 10f);
+                }
+            }
+
+            //Destroy<PanelExt>();
         }
     }
 
