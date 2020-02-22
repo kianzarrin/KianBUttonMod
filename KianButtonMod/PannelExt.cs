@@ -12,10 +12,11 @@
         public override void Start()
         {
             Log("PanelExt Start() called");
-            backgroundSprite = "GenericPanel";
-            color = new Color32(255, 0, 0, 100);
-            width = 100;
-            height = 200;
+            this.backgroundSprite = "GenericPanel";
+            this.color = new Color32(255, 0, 0, 100);
+            this.width = 100;
+            this.height = 200;
+
 
             //autoLayout = true;
             //autoLayoutDirection = LayoutDirection.Horizontal;

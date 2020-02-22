@@ -1,12 +1,10 @@
 using ICities;
-using ColossalFramework;
 using UnityEngine;
-using System;
-
 using ColossalFramework.UI;
 
 namespace Kian.Mod
 {
+    using static ShortCuts;
     public class KianModInfo : IUserMod {
         public string Name => "kian button mod";
         public string Description => "simple test mod with a button to activate test";
@@ -27,8 +25,11 @@ namespace Kian.Mod
 
     public static class LoadTool {
         public static void Load() {
-            //UIView.GetAView().gameObject.AddComponent<PanelExt>();
+            var v = UIView.GetAView();
+            UIComponent uic = v.AddUIComponent(typeof(PanelExt));
+
         }
+
         public static void Release() {
             var viewGameObject = UIView.GetAView().gameObject;
 
@@ -42,7 +43,8 @@ namespace Kian.Mod
                 }
             }
 
-            //Destroy<PanelExt>();
+            Log("Destroy<PanelExt>();");
+            Destroy<PanelExt>();
         }
     }
 
