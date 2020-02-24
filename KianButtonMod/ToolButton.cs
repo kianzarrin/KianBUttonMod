@@ -1,7 +1,7 @@
 using ColossalFramework.UI;
 using UnityEngine;
 using ColossalFramework;
-using static Kian.Mod.ShortCuts;
+using static Kian.Mod.Extensions;
 
 namespace Kian.UI
 {

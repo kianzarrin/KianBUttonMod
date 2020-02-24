@@ -338,3 +338,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/dependencies/TrafficManager.dll
+/dependencies/TMPE.GenericGameBridge.dll
+/dependencies/TMPE.CitiesGameBridge.dll
+/dependencies/RoundaboutBuilder.dll
+/dependencies/FineRoadTool.dll
+/dependencies/CSUtil.Commons.dll
+/dependencies/0Harmony.dll
