@@ -5,7 +5,8 @@ using Harmony;
 
 namespace HideTMPECrosswalks.Patches {
     using System.Reflection;
-    using Utils;
+    using KianButtonMod.Util;
+
     public static class TranspilerUtils {
         static void Log(object message) {
             Extensions.Log("TRANSPILER " + message);

@@ -1,7 +1,8 @@
 using ColossalFramework.UI;
 using UnityEngine;
 using ColossalFramework;
-using static Kian.Mod.Extensions;
+using KianButtonMod.Util;
+using static KianButtonMod.Util.Extensions;
 
 namespace Kian.UI
 {

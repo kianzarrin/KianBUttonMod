@@ -1,5 +1,7 @@
 ﻿using GenericGameBridge.Service;
+using System.Collections.Generic;
 using TrafficManager.Manager.Impl;
+using TrafficManager.State;
 
 namespace KianButtonMod.Util
 {
@@ -68,12 +70,14 @@ namespace KianButtonMod.Util
             return ShouldConnectTracks(sourceLaneID, targetLaneID, sourceStartNode);
         }
 
+        public static  NetLane[] laneBuffer => NetManager.instance.m_lanes.m_buffer;
+        public static ref NetLane ToLane(this uint laneId) => ref laneBuffer[laneId];
+
         public static uint GetLaneID(ushort segmentID, byte laneIndex)
         {
             var m_lanes = segmentID.ToSegment().Info.m_lanes;
             int n = m_lanes.Length;
             uint laneID = segmentID.ToSegment().m_lanes;
-            var laneBuffer = NetManager.instance.m_lanes.m_buffer;
             for(byte idx = 0; idx < n; idx++)
             {
                 if(idx == laneIndex) {
@@ -84,5 +88,73 @@ namespace KianButtonMod.Util
             return 0;
         }
 
+        // assuming that the segments can have connected lanes.
+        public static bool ShouldConnectTracks(
+            ushort sourceSegmentId,
+            ushort targetSegmentId,
+            ushort nodeId,
+            NetInfo.LaneType laneType,
+            VehicleInfo.VehicleType vehicleType)
+        {
+            bool sourceStartNode = (bool)netService.IsStartNode(sourceSegmentId, nodeId);
+            var sourceLaneInfos = sourceSegmentId.ToSegment().Info.m_lanes;
+            int nSource = sourceLaneInfos.Length;
+            
+            var targetLaneInfos = targetSegmentId.ToSegment().Info.m_lanes;
+            int nTarget = targetLaneInfos.Length;
+            
+            uint sourceLaneId, targetLaneId;
+            int sourceLaneIndex, targetLaneIndex;
+            for (sourceLaneIndex = 0, sourceLaneId = sourceSegmentId.ToSegment().m_lanes; 
+                sourceLaneIndex < nSource; 
+                ++sourceLaneIndex, sourceLaneId = laneBuffer[sourceLaneId].m_nextLane)
+            {
+                if ((sourceLaneInfos[sourceLaneIndex].m_laneType & laneType) == 0 ||
+                    (sourceLaneInfos[sourceLaneIndex].m_vehicleType & vehicleType) == 0)
+                {
+                    continue;
+                }
+                for (targetLaneIndex = 0, targetLaneId = targetSegmentId.ToSegment().m_lanes; 
+                    targetLaneId < nTarget; 
+                    ++targetLaneIndex, targetLaneId = laneBuffer[targetLaneId].m_nextLane)
+                {
+                    if ((targetLaneInfos[targetLaneIndex].m_laneType & laneType) == 0 ||
+                        (targetLaneInfos[targetLaneIndex].m_vehicleType & vehicleType) == 0)
+                    {
+                        continue;
+                    }
+                    bool b1 = LCMan.HasConnections(sourceLaneId, sourceStartNode);
+                    bool b2 = LCMan.AreLanesConnected(sourceLaneId, targetLaneId, sourceStartNode);
+                    if (!b1 || b2)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static IEnumerable<uint> segmentLanes(
+            ushort segmentId,
+            NetInfo.LaneType laneType,
+            VehicleInfo.VehicleType vehicleType)
+        {
+            var laneInfos = segmentId.ToSegment().Info.m_lanes;
+            int n = laneInfos.Length;
+
+            uint laneId;
+            int laneIndex;
+            for (laneIndex = 0, laneId = segmentId.ToSegment().m_lanes;
+                laneIndex < n;
+                ++laneIndex, laneId = laneBuffer[laneId].m_nextLane)
+            {
+                if ((laneInfos[laneIndex].m_laneType & laneType) == 0 ||
+                    (laneInfos[laneIndex].m_vehicleType & vehicleType) == 0)
+                {
+                    continue;
+                }
+                yield return laneId;
+            }
+        }
     }
 }

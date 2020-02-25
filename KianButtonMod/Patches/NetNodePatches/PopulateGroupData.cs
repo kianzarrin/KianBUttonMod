@@ -5,7 +5,7 @@ using System.Reflection.Emit;
 using System.Collections.Generic;
 
 namespace HideTMPECrosswalks.Patches.NetNodePatches {
-    using Utils;
+    using KianButtonMod.Util;
 
     [HarmonyPatch()]
     public static class PopulateGroupData {

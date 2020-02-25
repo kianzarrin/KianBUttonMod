@@ -1,45 +1,22 @@
 using System;
 using ColossalFramework;
 using UnityEngine;
-using HideTMPECrosswalks.Utils;
 using System.Reflection;
 using Harmony;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using ICities;
+using KianButtonMod.Util;
 
 namespace HideTMPECrosswalks.Patches {
-    using Utils;
+    
     [HarmonyPatch()]
     public static class NetNode_RenderInstance {
         public static bool ShouldHideCrossing(ushort nodeID, ushort segmentID) {
-#if DEBUG
-            if(Extensions.currentMode == AppMode.AssetEditor) {
-                return true; // always hide crossings in asset editor for quick testing.
-            }
-#endif
-            NetInfo info = segmentID.ToSegment().Info;
-            bool ret = info.m_netAI is RoadBaseAI && TMPEUTILS.HasCrossingBan(segmentID, nodeID);
-            // roads without pedesterian lanes (eg highways) have no crossings to hide to the best of my knowledege.
-            // not sure about custom highways. Processing texture for such roads may reduce smoothness of the transition.
-            ret &= info.m_hasPedestrianLanes;
-
-            //Texture cache is not broken.
-            ret &= PrefabUtils.MaterialCache != null;
-
-            //TODO optimize
-            //bool never = PrefabUtils.NeverZebra(info);
-            //bool always = PrefabUtils.AlwaysZebra(info);
-            //ret |= always;
-            //ret &= !never;
-
-            return ret;
+            return false;
         }
 
         public static Material CalculateMaterial(Material material, ushort nodeID, ushort segmentID) {
-            if (ShouldHideCrossing(nodeID, segmentID)) {
-                material = PrefabUtils.HideCrossing(material, segmentID.ToSegment().Info);
-            }
             return material;
         }
 
